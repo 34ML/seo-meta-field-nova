@@ -36,9 +36,9 @@ class SeoMetaItem extends Model
    */
   protected $casts = [
     'params' => 'object',
-    'title'=>'json',
-    'description'=>'json',
-    'keywords'=>'json',
+    'title'=>'object',
+    'description'=>'object',
+    'keywords'=>'object',
   ];
     /**
      * Get the owning seo_metaable model.
