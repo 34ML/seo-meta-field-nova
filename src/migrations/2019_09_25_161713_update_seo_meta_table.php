@@ -20,12 +20,23 @@ class UpdateSeoMetaTable extends Migration
           $table->text('keywords')->change();
         });
         $locale = config('seo.fallback_locale');
-        SeoMetaItem::query()
+        
+        if (Schema::getConnection()->getDriverName() != 'sqlite') {
+            SeoMetaItem::query()
             ->update([
                 'title' => DB::raw("concat('{\"$locale\": \"', title,'\"}')"),
                 'description' => DB::raw("concat('{\"$locale\": \"', description,'\"}')"),
                 'keywords' => DB::raw("concat('{\"$locale\": \"', keywords,'\"}')"),
             ]);
+        } else {
+            SeoMetaItem::query()
+                ->update([
+                    'title' => "{ {$locale} :title}'",
+                    'description' => "{ {$locale} :description}'",
+                    'keywords' => "{ {$locale} :keywords}'",
+                ]);
+        }
+        
         Schema::table('seo_meta', function (Blueprint $table) {
             $table->json('title')->change();
             $table->json('description')->change();
@@ -46,11 +57,21 @@ class UpdateSeoMetaTable extends Migration
             $table->string('keywords')->change();
         });
         $locale = config('seo.fallback_locale');
-        SeoMetaItem::query()
+        
+        if (Schema::getConnection()->getDriverName() != 'sqlite') {
+            SeoMetaItem::query()
             ->update([
                 'title' => DB::raw("JSON_UNQUOTE(JSON_EXTRACT(title,\"$.$locale\"))"),
                 'description' => DB::raw("JSON_UNQUOTE(JSON_EXTRACT(description,\"$.$locale\"))"),
                 'keywords' => DB::raw("JSON_UNQUOTE(JSON_EXTRACT(keywords,\"$.$locale\"))"),
             ]);
+        } else {
+            SeoMetaItem::query()
+                ->update([
+                    'title' => 'title',
+                    'description' => 'description',
+                    'keywords' => 'keywords',
+                ]);
+        }
     }
 }
