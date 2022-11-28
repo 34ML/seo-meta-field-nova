@@ -34,12 +34,12 @@ export default {
         return "bg-success";
       }
 
-      if (!hasTitleForAnyLocale || !hasDescriptionForAnyLocale || !hasKeywordsForAnyLocale || !hasFollow) {
-        return "bg-warning";
-      }
-
       if(!hasTitleForAnyLocale && !hasDescriptionForAnyLocale && !hasKeywordsForAnyLocale && !hasFollow) {
         return "bg-danger";
+      }
+
+      if (!hasTitleForAnyLocale || !hasDescriptionForAnyLocale || !hasKeywordsForAnyLocale || !hasFollow) {
+        return "bg-warning";
       }
     }
   }
