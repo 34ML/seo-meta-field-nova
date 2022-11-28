@@ -34,7 +34,19 @@ export default {
         return "bg-success";
       }
 
-      if (!hasTitleForAnyLocale || !hasDescriptionForAnyLocale || !hasKeywordsForAnyLocale) {
+      if (!hasTitleForAnyLocale && hasDescriptionForAnyLocale && hasKeywordsForAnyLocale && hasFollow) {
+        return "bg-warning";
+      }
+
+      if (hasTitleForAnyLocale && !hasDescriptionForAnyLocale && hasKeywordsForAnyLocale && hasFollow) {
+        return "bg-warning";
+      }
+
+      if (hasTitleForAnyLocale && hasDescriptionForAnyLocale && !hasKeywordsForAnyLocale && hasFollow) {
+        return "bg-warning";
+      }
+
+      if (hasTitleForAnyLocale && hasDescriptionForAnyLocale && hasKeywordsForAnyLocale && !hasFollow) {
         return "bg-warning";
       }
 
