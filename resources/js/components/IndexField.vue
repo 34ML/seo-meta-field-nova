@@ -38,9 +38,7 @@ export default {
         return "bg-danger";
       }
 
-      if (!hasTitleForAnyLocale || !hasDescriptionForAnyLocale || !hasKeywordsForAnyLocale || !hasFollow) {
-        return "bg-warning";
-      }
+      return "bg-warning";
     }
   }
 };
