@@ -34,19 +34,7 @@ export default {
         return "bg-success";
       }
 
-      if (!hasTitleForAnyLocale && hasDescriptionForAnyLocale && hasKeywordsForAnyLocale && hasFollow) {
-        return "bg-warning";
-      }
-
-      if (hasTitleForAnyLocale && !hasDescriptionForAnyLocale && hasKeywordsForAnyLocale && hasFollow) {
-        return "bg-warning";
-      }
-
-      if (hasTitleForAnyLocale && hasDescriptionForAnyLocale && !hasKeywordsForAnyLocale && hasFollow) {
-        return "bg-warning";
-      }
-
-      if (hasTitleForAnyLocale && hasDescriptionForAnyLocale && hasKeywordsForAnyLocale && !hasFollow) {
+      if (!hasTitleForAnyLocale || !hasDescriptionForAnyLocale || !hasKeywordsForAnyLocale || !hasFollow) {
         return "bg-warning";
       }
 
