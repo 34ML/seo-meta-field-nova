@@ -373,9 +373,7 @@ __webpack_require__.r(__webpack_exports__);
         return "bg-danger";
       }
 
-      if (!hasTitleForAnyLocale || !hasDescriptionForAnyLocale || !hasKeywordsForAnyLocale || !hasFollow) {
-        return "bg-warning";
-      }
+      return "bg-warning";
     }
   }
 });
