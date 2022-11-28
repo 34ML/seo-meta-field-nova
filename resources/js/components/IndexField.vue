@@ -18,9 +18,15 @@ export default {
         if (value.title[locale] && value.title[locale].trim() !== ''){
           hasTitleForAnyLocale = true;
         }
+      }
+
+      for (const locale in value.description) {
         if (value.description[locale] && value.description[locale].trim() !== ''){
           hasDescriptionForAnyLocale = true;
         }
+      }
+
+      for (const locale in value.keywords) {
         if (value.keywords[locale] && value.keywords[locale].trim() !== ''){
           hasKeywordsForAnyLocale = true;
         }
