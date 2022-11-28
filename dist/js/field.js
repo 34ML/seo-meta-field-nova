@@ -342,45 +342,52 @@ __webpack_require__.r(__webpack_exports__);
     seoStatus: function seoStatus() {
       var field = this.field;
       var value = this.field.value;
+      var hasTitleForAnyLocale = false;
+      var hasDescriptionForAnyLocale = false;
+      var hasKeywordsForAnyLocale = false;
+      var hasFollow = false;
 
-      if (!field.default_values && value) {
-        var hasTitleForAnyLocale = false;
-        var hasDescriptionForAnyLocale = false;
-        var hasKeywordsForAnyLocale = false;
-        var hasFollow = false;
-
-        for (var locale in value.title) {
-          if (value.title[locale] && value.title[locale].trim() !== '') {
-            hasTitleForAnyLocale = true;
-          }
-
-          if (value.description[locale] && value.description[locale].trim() !== '') {
-            hasDescriptionForAnyLocale = true;
-          }
-
-          if (value.keywords[locale] && value.keywords[locale].trim() !== '') {
-            hasKeywordsForAnyLocale = true;
-          }
+      for (var locale in value.title) {
+        if (value.title[locale] && value.title[locale].trim() !== '') {
+          hasTitleForAnyLocale = true;
         }
 
-        if (["index, follow", "index, nofollow"].indexOf(value.follow_type) >= 0) {
-          hasFollow = true;
+        if (value.description[locale] && value.description[locale].trim() !== '') {
+          hasDescriptionForAnyLocale = true;
         }
 
-        if (hasTitleForAnyLocale && hasDescriptionForAnyLocale && hasKeywordsForAnyLocale && hasFollow) {
-          return "bg-success";
-        }
-
-        if (hasTitleForAnyLocale || hasDescriptionForAnyLocale || hasKeywordsForAnyLocale) {
-          return "bg-warning";
-        }
-
-        if (!hasTitleForAnyLocale && !hasDescriptionForAnyLocale && !hasKeywordsForAnyLocale && !hasFollow) {
-          return "bg-danger";
+        if (value.keywords[locale] && value.keywords[locale].trim() !== '') {
+          hasKeywordsForAnyLocale = true;
         }
       }
 
-      return "bg-danger";
+      if (["index, follow", "index, nofollow"].indexOf(value.follow_type) >= 0) {
+        hasFollow = true;
+      }
+
+      if (hasTitleForAnyLocale && hasDescriptionForAnyLocale && hasKeywordsForAnyLocale && hasFollow) {
+        return "bg-success";
+      }
+
+      if (!hasTitleForAnyLocale && hasDescriptionForAnyLocale && hasKeywordsForAnyLocale && hasFollow) {
+        return "bg-warning";
+      }
+
+      if (hasTitleForAnyLocale && !hasDescriptionForAnyLocale && hasKeywordsForAnyLocale && hasFollow) {
+        return "bg-warning";
+      }
+
+      if (hasTitleForAnyLocale && hasDescriptionForAnyLocale && !hasKeywordsForAnyLocale && hasFollow) {
+        return "bg-warning";
+      }
+
+      if (hasTitleForAnyLocale && hasDescriptionForAnyLocale && hasKeywordsForAnyLocale && !hasFollow) {
+        return "bg-warning";
+      }
+
+      if (!hasTitleForAnyLocale && !hasDescriptionForAnyLocale && !hasKeywordsForAnyLocale && !hasFollow) {
+        return "bg-danger";
+      }
     }
   }
 });
