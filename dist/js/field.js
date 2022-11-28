@@ -344,30 +344,39 @@ __webpack_require__.r(__webpack_exports__);
       var value = this.field.value;
 
       if (!field.default_values && value) {
+        var hasTitleForAnyLocale = false;
+        var hasDescriptionForAnyLocale = false;
+        var hasKeywordsForAnyLocale = false;
+        var hasFollow = false;
+
+        for (var locale in value.title) {
+          if (value.title[locale] && value.title[locale].trim() !== '') {
+            hasTitleForAnyLocale = true;
+          }
+
+          if (value.description[locale] && value.description[locale].trim() !== '') {
+            hasDescriptionForAnyLocale = true;
+          }
+
+          if (value.keywords[locale] && value.keywords[locale].trim() !== '') {
+            hasKeywordsForAnyLocale = true;
+          }
+        }
+
         if (["index, follow", "index, nofollow"].indexOf(value.follow_type) >= 0) {
-          var hasTitleForAnyLocale = false;
-          var hasDescriptionForAnyLocale = false;
-          var hasKeywordsForAnyLocale = false;
+          hasFollow = true;
+        }
 
-          for (var locale in value.title) {
-            if (value.title[locale] && value.title[locale].trim() !== '') {
-              hasTitleForAnyLocale = true;
-            }
+        if (hasTitleForAnyLocale && hasDescriptionForAnyLocale && hasKeywordsForAnyLocale && hasFollow) {
+          return "bg-success";
+        }
 
-            if (value.description[locale] && value.description[locale].trim() !== '') {
-              hasDescriptionForAnyLocale = true;
-            }
-
-            if (value.keywords[locale] && value.keywords[locale].trim() !== '') {
-              hasKeywordsForAnyLocale = true;
-            }
-          }
-
-          if (hasTitleForAnyLocale && hasDescriptionForAnyLocale && hasKeywordsForAnyLocale) {
-            return "bg-success";
-          }
-
+        if (hasTitleForAnyLocale || hasDescriptionForAnyLocale || hasKeywordsForAnyLocale) {
           return "bg-warning";
+        }
+
+        if (!hasTitleForAnyLocale && !hasDescriptionForAnyLocale && !hasKeywordsForAnyLocale && !hasFollow) {
+          return "bg-danger";
         }
       }
 
