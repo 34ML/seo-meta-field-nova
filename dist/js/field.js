@@ -351,12 +351,16 @@ __webpack_require__.r(__webpack_exports__);
         if (value.title[locale] && value.title[locale].trim() !== '') {
           hasTitleForAnyLocale = true;
         }
+      }
 
-        if (value.description[locale] && value.description[locale].trim() !== '') {
+      for (var _locale in value.description) {
+        if (value.description[_locale] && value.description[_locale].trim() !== '') {
           hasDescriptionForAnyLocale = true;
         }
+      }
 
-        if (value.keywords[locale] && value.keywords[locale].trim() !== '') {
+      for (var _locale2 in value.keywords) {
+        if (value.keywords[_locale2] && value.keywords[_locale2].trim() !== '') {
           hasKeywordsForAnyLocale = true;
         }
       }
