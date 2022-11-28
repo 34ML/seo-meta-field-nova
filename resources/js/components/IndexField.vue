@@ -34,7 +34,7 @@ export default {
         return "bg-success";
       }
 
-      if (hasTitleForAnyLocale || hasDescriptionForAnyLocale || hasKeywordsForAnyLocale) {
+      if (!hasTitleForAnyLocale || !hasDescriptionForAnyLocale || !hasKeywordsForAnyLocale) {
         return "bg-warning";
       }
 
