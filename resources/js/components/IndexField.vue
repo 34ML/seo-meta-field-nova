@@ -37,14 +37,14 @@ export default {
       }
 
       if (hasTitleForAnyLocale && hasDescriptionForAnyLocale && hasKeywordsForAnyLocale && hasFollow) {
-        return "bg-success";
+        return "bg-green-500";
       }
 
       if(!hasTitleForAnyLocale && !hasDescriptionForAnyLocale && !hasKeywordsForAnyLocale && !hasFollow) {
-        return "bg-danger";
+        return "bg-red-500";
       }
 
-      return "bg-warning";
+      return "bg-yellow-500";
     }
   }
 };

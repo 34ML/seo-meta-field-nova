@@ -68,18 +68,18 @@ class SeoMeta extends Field
             'title_format' => $resource->getSeoTitleFormatter()
         ];
         if (!$this->value) {
-            $this->value = (object)[
-                'title' => (object) $resource->getSeoTitleDefault() ,
-                'description' => (object) $resource->getSeoDescriptionDefault() ,
-                'keywords' => (object) $resource->getSeoKeywordsDefault() ,
+            $this->value = [
+                'title' => $resource->getSeoTitleDefault() ?? '' ,
+                'description' => $resource->getSeoDescriptionDefault() ?? '' ,
+                'keywords' => $resource->getSeoKeywordsDefault() ?? '' ,
                 'image' => $resource->getSeoImageDefault(),
                 'follow_type' => $resource->getSeoFollowDefault()
             ];
             $meta['default_values'] = true;
         }
 
-        if ($this->value && $this->value->image) {
-            $meta['image_url'] = Storage::disk($this->file_disk)->url($this->value->image);
+        if ($this->value && $this->value['image']) {
+            $meta['image_url'] = Storage::disk($this->file_disk)->url($this->value['image']);
         }
         $this->withMeta($meta);
     }
