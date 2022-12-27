@@ -1,14 +1,15 @@
 <template>
-    <panel-item :field="field">
-        {{ field.name }}
-        <div slot="value" class="seo-meta-detail">
-            <b v-if="!hasSeo">You need some SEO data</b>
-            <button
-                type="button"
-                class="btn btn-primary btn-default"
-                @click="showSeoPreviews = !showSeoPreviews"
-                v-if="hasSeo"
-            >{{ showSeoPreviews ? 'Hide' : 'Show' }} SEO previews
+  <PanelItem :field="field">
+    <template #value>
+      {{ field.name }}
+      <div slot="value" class="seo-meta-detail">
+        <b v-if="!hasSeo">{{ __('You need some SEO data') }}</b>
+        <button
+            type="button"
+            class="btn btn-primary btn-default"
+            @click="showSeoPreviews = !showSeoPreviews"
+            v-if="hasSeo"
+        >{{ showSeoPreviews ? __('Hide') : __('Show') }} {{ __('SEO previews') }}
             </button>
             <div class="seo-meta-detail__previews" v-if="showSeoPreviews && hasSeo" v-for="(locale,index) in availableLocales" :key="index">
                 <div class="seo-meta-detail__wrapper">
@@ -44,7 +45,8 @@
                 </div>
             </div>
         </div>
-    </panel-item>
+    </template>
+  </PanelItem>
 </template>
 
 <script>

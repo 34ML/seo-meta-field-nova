@@ -1,6 +1,6 @@
 <template>
-    <default-field :field="field" :errors="errors">
-        <template slot="field" v-if="ready">
+  <DefaultField :field="field" :errors="errors">
+    <template #field v-if="ready">
           <div v-for="(locale,index) in availableLocales" :key="index">
             <div class="form-group mb-3">
                 <label class="mb-1 block">Title [{{locale}}]:</label>
@@ -11,6 +11,7 @@
                     :class="errorClasses"
                     :placeholder="field.name[locale]"
                     v-model="value.title[locale]"
+                    @change="setHasChanged"
                     @input="setHasChanged"
                 />
                 <p
@@ -41,30 +42,30 @@
           </div>
             <div class="form-group mb-3">
                 <label class="mb-1 block">Follow:</label>
-                <select-control
+                <SelectControl
                     :id="field.name + '-follow'"
-                    v-model="value.follow_type"
-                    class="w-full form-control form-select"
+                    :selected="value.follow_type"
+                    class="w-full"
                     :options="followOptions"
-                    @change="setHasChanged"
+                    @change="value.follow_type = $event;setHasChanged()"
                 >
                     <option value selected>
                         {{
                         __('Choose an option')
                         }}
                     </option>
-                </select-control>
+                </SelectControl>
             </div>
             <div class="form-group mb-3">
                 <label class="mb-1 block">Image:</label>
                 <seo-media
                     :value="field.image_url"
                     :file="imageFile"
-                    @change="imageFile = $event;setHasChanged($event)"
+                    @imageSelect="uploadImage"
                 ></seo-media>
             </div>
         </template>
-    </default-field>
+  </DefaultField>
 </template>
 
 <script>
@@ -107,7 +108,12 @@ export default {
         fill(formData) {
             formData.append(
                 this.field.attribute,
-                this.value ? JSON.stringify(this.value) : ""
+                this.value ? JSON.stringify(this.value, function replacer(key, value) {
+                  if (Array.isArray(value) && value.length === 0) {
+                    return { ...value }; // Converts empty array with string properties into a POJO
+                  }
+                  return value;
+                }) : ""
             );
             if (this.imageFile) {
                 formData.append(
@@ -129,7 +135,12 @@ export default {
          */
         setHasChanged() {
             this.hasChanged = true;
-        }
+        },
+      uploadImage(file) { // TODO check why the image is not being sent
+        this.imageFile = file;
+        this.setHasChanged();
+      }
+
     }
 };
 </script>
