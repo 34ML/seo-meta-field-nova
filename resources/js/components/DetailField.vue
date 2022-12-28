@@ -1,12 +1,11 @@
 <template>
   <PanelItem :field="field">
     <template #value>
-      {{ field.name }}
       <div slot="value" class="seo-meta-detail">
         <b v-if="!hasSeo">{{ __('You need some SEO data') }}</b>
         <button
             type="button"
-            class="btn btn-primary btn-default"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
             @click="showSeoPreviews = !showSeoPreviews"
             v-if="hasSeo"
         >{{ showSeoPreviews ? __('Hide') : __('Show') }} {{ __('SEO previews') }}

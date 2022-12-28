@@ -79,7 +79,7 @@ class SeoMeta extends Field
         }
 
         if ($this->value && $this->value['image']) {
-            $meta['image_url'] = Storage::disk($this->file_disk)->url($this->value['image']);
+            $meta['image_url'] = $this->getImage($this->value['image']);
         }
         $this->withMeta($meta);
     }
@@ -182,5 +182,17 @@ class SeoMeta extends Field
                 $relationship->save();
             }
         }
+    }
+
+    /**
+     * @param $image
+     * @return String the temporary URL if the disk is s3
+     */
+    private function getImage($image)
+    {
+        if($this->file_disk == 's3')
+            return Storage::disk($this->file_disk)->temporaryUrl($this->value['image'],now()->addMinutes(10));
+        else
+            return Storage::disk($this->file_disk)->url($this->value['image']);
     }
 }

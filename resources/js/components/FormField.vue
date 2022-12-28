@@ -136,7 +136,7 @@ export default {
         setHasChanged() {
             this.hasChanged = true;
         },
-      uploadImage(file) { // TODO check why the image is not being sent
+      uploadImage(file) {
         this.imageFile = file;
         this.setHasChanged();
       }
