@@ -99,6 +99,7 @@ export default {
          */
         setInitialValue() {
             this.value = this.field.value || this.field.default_value;
+            this.value = this.fixStruct(this.value)
             this.ready = true;
         },
 
@@ -122,6 +123,15 @@ export default {
                 );
             }
         },
+      fixStruct(value){
+        if(value.title == null)
+          value.title = {}
+        if(value.keywords == null)
+          value.keywords = {}
+        if(value.description == null)
+          value.description = {}
+        return value
+      },
 
         /**
          * Update the field's internal value.
