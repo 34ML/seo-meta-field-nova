@@ -53,7 +53,7 @@ trait SeoMetaTrait
 
         if ($attrs && isset($attrs['image']) && $attrs['image']) {
             $attrs['image_path'] = strpos($attrs['image'], '//') === false
-                ? Storage::disk(config('seo.disk'))->url($attrs['image'])
+                ? self::getImage($attrs['image'])
                 : $attrs['image'];
         }
 
@@ -243,5 +243,17 @@ trait SeoMetaTrait
     public function addFollowDefault(string $value): void
     {
         $this->follow = $value;
+    }
+
+    /**
+     * @param $image
+     * @return String the temporary URL if the disk is s3
+     */
+    private static function getImage($image)
+    {
+        if(config('seo.disk') == 's3')
+            return Storage::disk('s3')->temporaryUrl($image,now()->addMinutes(10));
+        else
+            return Storage::url($image);
     }
 }
