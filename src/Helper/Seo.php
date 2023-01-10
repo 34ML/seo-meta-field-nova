@@ -26,8 +26,20 @@ class Seo {
             'description' => $description,
             'keywords' => $keywords,
             'image' => $image,
-            'image_path' => $image && strpos($image, '//') === false ? Storage::url($image) : $image,
+            'image_path' => $image && strpos($image, '//') === false ? self::getImage($image) : $image,
             'follow_type' => $follow_type
         ];
+    }
+
+    /**
+     * @param $image
+     * @return String the temporary URL if the disk is s3
+     */
+    private static function getImage($image)
+    {
+        if(config('seo.disk') == 's3')
+            return Storage::disk('s3')->temporaryUrl($image,now()->addMinutes(10));
+        else
+            return Storage::url($image);
     }
 }
